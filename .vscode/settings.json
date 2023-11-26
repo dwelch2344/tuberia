@@ -10,10 +10,6 @@
             "${fileBasenameNoExtension}",
             "-c",
             "./vite.config.ts"
-            // "--runInBand",
-            // "--watch",
-            // "--coverage=false",
-            // "--no-cache"
         ],
         "cwd": "${workspaceRoot}",
         "console": "integratedTerminal",

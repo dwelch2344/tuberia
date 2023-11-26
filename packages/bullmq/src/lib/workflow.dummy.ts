@@ -1,25 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import IORedis from 'ioredis';
 import EventEmitter from 'node:events';
-import { Job, JobsOptions } from 'bullmq';
-import { AbstractWorkflow, Pipeline } from '@tuberia/core';
+import { JobsOptions } from 'bullmq';
+import { AbstractWorkflow, Job } from '@tuberia/core';
 
 import { BullPipeline, BullPipelineConfig } from './pipeline.bull';
 
-type DummyReturn = { id?: string; seq: number };
-type x = new (
-  workflow: AbstractWorkflow<any, any, any, any, any>,
-  config: BullPipelineConfig
-) => Pipeline<any, DummyReturn>;
+export type DummyInput = { seq: number };
+export type DummyReturn = { id?: string; seq: number };
 export class DummyWorkflow extends AbstractWorkflow<
-  any,
+  DummyInput,
   DummyReturn,
-  Pipeline<any, DummyReturn>,
   BullPipelineConfig,
   JobsOptions
 > {
-  processed: Job[] = [];
+  override async process(
+    job: Job<DummyInput, DummyReturn>
+  ): Promise<DummyReturn> {
+    this.processed.push(job);
+    this.emitter.emit(DummyWorkflow.PROCESSED_KEY, job);
+    return { id: job.id as string, seq: job.data.seq } as DummyReturn;
+  }
+  processed: Job<DummyInput, DummyReturn>[] = [];
   private emitter = new EventEmitter();
   static PROCESSED_KEY = 'processed';
 
@@ -31,14 +32,8 @@ export class DummyWorkflow extends AbstractWorkflow<
         name: qname,
         redis,
       },
-      BullPipeline as unknown as x
+      BullPipeline
     );
-  }
-
-  async process(job: Job<any, any>): Promise<DummyReturn> {
-    this.processed.push(job);
-    this.emitter.emit(DummyWorkflow.PROCESSED_KEY, job);
-    return { id: job.id, seq: job.data.seq };
   }
 
   async addListener(l: (job: Job) => Promise<unknown>) {

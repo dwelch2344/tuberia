@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { default as IORedis } from 'ioredis';
 import { AbstractWorkflow, Pipeline } from '@tuberia/core';
 import {
@@ -26,13 +27,7 @@ export class BullPipeline<JD, RT> extends Pipeline<
   JobsOptions
 > {
   constructor(
-    workflow: AbstractWorkflow<
-      JD,
-      RT,
-      Pipeline<JD, RT>,
-      BullPipelineConfig,
-      JobsOptions
-    >,
+    workflow: AbstractWorkflow<JD, RT, BullPipelineConfig, JobsOptions>,
     config: BullPipelineConfig
   ) {
     super(workflow, config);

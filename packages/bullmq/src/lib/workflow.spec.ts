@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { v4 } from 'uuid';
 import { default as IORedis } from 'ioredis';
 
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
-import { DummyWorkflow } from './workflow.dummy';
+import { DummyInput, DummyWorkflow } from './workflow.dummy';
 
 describe(
   'test queues',
@@ -27,9 +26,9 @@ describe(
     });
 
     it('delays work as expected', async () => {
-      const results: any[] = [];
+      const results: DummyInput[] = [];
 
-      const promise = new Promise<any[]>((resolve) => {
+      const promise = new Promise<number[]>((resolve) => {
         workflow.addListener(async (job) => {
           results.push(job.data);
           if (results.length >= 4) {

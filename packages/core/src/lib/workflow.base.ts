@@ -1,21 +1,14 @@
 import { Pipeline, Job } from './pipeline.base';
 
-export abstract class AbstractWorkflow<
-  JD,
-  RT,
-  PL extends Pipeline<JD, RT>,
-  PC = unknown,
-  JO = unknown,
-  WF extends new (
-    workflow: AbstractWorkflow<JD, RT, PL, PC, JO>,
-    config: PC
-  ) => PL = new (
-    workflow: AbstractWorkflow<JD, RT, PL, PC, JO>,
-    config: PC
-  ) => PL
-> {
-  #pipeline?: Pipeline<JD, RT>;
-  constructor(protected pipelineConfig: PC, protected pipelineClass: WF) {}
+export abstract class AbstractWorkflow<JD, RT, PC = unknown, JO = unknown> {
+  #pipeline?: Pipeline<JD, RT, PC, JO>;
+  constructor(
+    protected pipelineConfig: PC,
+    protected pipelineClass: new (
+      wf: AbstractWorkflow<JD, RT, PC, JO>,
+      config: PC
+    ) => Pipeline<JD, RT, PC, JO>
+  ) {}
 
   readonly processor: (job: Job<JD, RT>) => Promise<RT> = (job) =>
     this.process(job);
