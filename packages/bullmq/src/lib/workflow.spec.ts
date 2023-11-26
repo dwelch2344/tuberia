@@ -50,6 +50,8 @@ describe(
       expect(resolved[1]).toBe(2);
       expect(resolved[2]).toBe(4);
       expect(resolved[3]).toBe(3);
+
+      console.log(resolved);
     });
   },
   { timeout: 15 * 1000 }

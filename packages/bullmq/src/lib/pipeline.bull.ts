@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-constraint */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { default as IORedis } from 'ioredis';
 import { AbstractWorkflow, Pipeline } from '@tuberia/core';
 import {

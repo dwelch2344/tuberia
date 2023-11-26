@@ -8,6 +8,8 @@
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/vitest",
         "args": [
             "${fileBasenameNoExtension}",
+            "-c",
+            "./vite.config.ts"
             // "--runInBand",
             // "--watch",
             // "--coverage=false",

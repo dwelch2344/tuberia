@@ -1,17 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pipeline, Job } from './pipeline.base';
-
-// type Constructor<A, B extends abstract new (...args: any) => any> = new (params: ConstructorParameters<B>) => A;
 
 export abstract class AbstractWorkflow<
   JD,
   RT,
   PL extends Pipeline<JD, RT>,
-  // PL extends new (...args: any) => Pipeline<JD, RT>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  PC = any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  JO = any,
+  PC = unknown,
+  JO = unknown,
   WF extends new (
     workflow: AbstractWorkflow<JD, RT, PL, PC, JO>,
     config: PC
@@ -21,11 +15,7 @@ export abstract class AbstractWorkflow<
   ) => PL
 > {
   #pipeline?: Pipeline<JD, RT>;
-  constructor(
-    protected pipelineConfig: PC,
-    // protected pipelineClass: PL // protected pipelineClass: Constructor<PL>
-    protected pipelineClass: WF // protected pipelineClass: abstract new (...args: any) => any
-  ) {}
+  constructor(protected pipelineConfig: PC, protected pipelineClass: WF) {}
 
   readonly processor: (job: Job<JD, RT>) => Promise<RT> = (job) =>
     this.process(job);

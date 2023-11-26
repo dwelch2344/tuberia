@@ -19,7 +19,6 @@ export class DummyWorkflow extends AbstractWorkflow<
   BullPipelineConfig,
   JobsOptions
 > {
-  // class DummyWorkflow extends AbstractWorkflow<any, DummyReturn {
   processed: Job[] = [];
   private emitter = new EventEmitter();
   static PROCESSED_KEY = 'processed';
