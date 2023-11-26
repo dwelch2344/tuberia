@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@tuberia/bullmq": ["packages/bullmq/src/index.ts"],
       "@tuberia/core": ["packages/core/src/index.ts"]
     }
   },

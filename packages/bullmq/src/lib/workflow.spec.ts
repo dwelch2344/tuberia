@@ -1,36 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { v4 } from 'uuid';
 import { default as IORedis } from 'ioredis';
-import { Workflow } from './workflow';
-import { Job } from 'bullmq';
-import EventEmitter from 'node:events';
+
 import { describe, it, expect, beforeEach, afterAll } from 'vitest';
-
-type DummyReturn = { id?: string; seq: number };
-class DummyWorkflow extends Workflow<any, DummyReturn> {
-  processed: Job[] = [];
-  private emitter = new EventEmitter();
-  static PROCESSED_KEY = 'processed';
-
-  constructor(qname: string, redis: IORedis) {
-    super({
-      app: 'example',
-      env: 'test',
-      name: qname,
-      redis,
-    });
-  }
-
-  async process(job: Job<any, any>): Promise<DummyReturn> {
-    this.processed.push(job);
-    this.emitter.emit(DummyWorkflow.PROCESSED_KEY, job);
-    return { id: job.id, seq: job.data.seq };
-  }
-
-  async addListener(l: (job: Job) => Promise<unknown>) {
-    this.emitter.addListener(DummyWorkflow.PROCESSED_KEY, l);
-  }
-}
+import { DummyWorkflow } from './workflow.dummy';
 
 describe(
   'test queues',
