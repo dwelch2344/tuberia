@@ -10,6 +10,7 @@
         "{options.outputPath}"
       ],
       "options": {
+        "generatePackageJson": true,
         "outputPath": "dist/packages/bullmq",
         "main": "packages/bullmq/src/index.ts",
         "tsConfig": "packages/bullmq/tsconfig.lib.json",
@@ -18,10 +19,25 @@
         ]
       }
     },
+    "buildpub": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "generatePackageJson": true,
+        "outputPath": "dist/packages/bullmq",
+        "main": "packages/bullmq/src/index.ts",
+        "tsConfig": "packages/bullmq/tsconfig.publish.json",
+        "assets": [
+          "packages/bullmq/*.md"
+        ]
+      }
+    },
     "publish": {
-      "command": "node tools/scripts/publish.mjs bullmq {args.ver} {args.tag}",
+      "command": "node tools/scripts/publish.mjs bullmq {args.ver} {args.tag} {args.otp}",
       "dependsOn": [
-        "build"
+        "buildpub"
       ]
     },
     "lint": {
@@ -32,7 +48,8 @@
       "options": {
         "lintFilePatterns": [
           "packages/bullmq/**/*.ts",
-          "packages/bullmq/package.json"
+          "packages/bullmq/package.json",
+          "packages/bullmq/project.json"
         ]
       }
     },

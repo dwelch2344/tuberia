@@ -2,7 +2,12 @@
   "name": "@tuberia/bullmq",
   "version": "0.0.1",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "ioredis": "^5.3.2",
+    "bullmq": "^4.14.2"
+  },
+  "peerDependencies": {
+    "@tuberia/core": "^0.0.1"
   },
   "type": "commonjs",
   "main": "./src/index.js",

@@ -1,7 +1,7 @@
 {
   "name": "@tuberia/source",
   "description": "tubería - pipelines, but pretty",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {},
   "private": true,
@@ -24,6 +24,7 @@
     "@typescript-eslint/parser": "^6.9.1",
     "@vitest/coverage-v8": "~0.34.6",
     "@vitest/ui": "~0.34.6",
+    "depcheck": "^1.4.7",
     "esbuild": "^0.19.2",
     "eslint": "~8.46.0",
     "eslint-config-prettier": "^9.0.0",
@@ -39,13 +40,14 @@
     "vitest": "~0.34.6"
   },
   "dependencies": {
+    "@tuberia/core": "^0.0.1",
     "bullmq": "^4.14.2",
     "express": "~4.18.1",
     "ioredis": "^5.3.2",
     "tslib": "^2.3.0",
     "uuid": "^9.0.1"
   },
-  "nx": {
+  "nx2": {
     "includedScripts": []
   }
 }

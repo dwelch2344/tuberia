@@ -7,6 +7,7 @@ import {
   QueueOptions,
   WorkerOptions,
   JobsOptions,
+  Processor,
 } from 'bullmq';
 
 export interface BullPipelineConfig {
@@ -80,9 +81,9 @@ export class BullPipeline<JD, RT> extends Pipeline<
 
   protected get worker() {
     if (!this.#worker) {
-      this.#worker = new Worker<JD, RT>(
+      this.#worker = new Worker<JD, RT, string>(
         this.config.name,
-        this.workflow.processor,
+        this.workflow.processor as Processor,
         {
           ...this.config.options?.worker,
           prefix: this.prefix,
